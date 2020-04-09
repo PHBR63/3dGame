@@ -20832,6 +20832,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChaWitch (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4476101829917434533, guid: a84920e59d7ffbb4f9f986d81044f98c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d1a67fe3f9f53264fa240cdce010e352, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a84920e59d7ffbb4f9f986d81044f98c, type: 3}
 --- !u!1 &3790323894584143995 stripped
@@ -20890,6 +20895,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1214385142}
   agent: {fileID: 3790323894584143996}
+  anim: {fileID: 3790323894584143999}
+--- !u!95 &3790323894584143999 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4476101829917434533, guid: a84920e59d7ffbb4f9f986d81044f98c,
+    type: 3}
+  m_PrefabInstance: {fileID: 758752522071040286}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &3790323894584144000
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ public class IAControl : MonoBehaviour
 
       
 
-        // anim.SetFloat("Velocidade", agent.velocity.magnitude);
+        anim.SetFloat("Velocidade", agent.velocity.magnitude);
     }
 
     void ChangeState()
@@ -65,7 +65,27 @@ public class IAControl : MonoBehaviour
 
     private IEnumerator Patrol()
     {
-        throw new NotImplementedException();
+        Vector3 newplace = new Vector3(transform.position.x + UnityEngine.Random.Range(-10, 10), transform.position.y, transform.position.z + UnityEngine.Random.Range(-10, 10));
+        agent.isStopped = false;
+
+        float waitingtime = UnityEngine.Random.Range(1, 5);
+        while (state == States.patrol)
+        {
+            
+            agent.SetDestination(newplace);
+            yield return new WaitForEndOfFrame();
+
+            if (Vector3.Distance(transform.position, target.transform.position) < 1)
+            {
+                ChangeState(States.idle);
+            }
+            waitingtime -= Time.deltaTime;
+            if (waitingtime < 0)
+            {
+                ChangeState(States.idle);
+            }
+        }
+        ChangeState();
     }
 
     private IEnumerator Damage()
@@ -90,7 +110,10 @@ public class IAControl : MonoBehaviour
         {
            
             yield return new WaitForEndOfFrame();
-
+            if (Vector3.Distance(transform.position, target.transform.position) > 3)
+            {
+                ChangeState(States.berserk);
+            }
         }
         ChangeState();
         anim.SetBool("Atacando", false);
@@ -104,11 +127,20 @@ public class IAControl : MonoBehaviour
     IEnumerator Idle()
     {
         agent.isStopped = true;
+        float waitingtime = UnityEngine.Random.Range(1, 5);
         while (state == States.idle)
         {
            
             yield return new WaitForEndOfFrame();
-
+            if (Vector3.Distance(transform.position, target.transform.position) < 20)
+            {
+                ChangeState(States.berserk);
+            }
+            waitingtime -= Time.deltaTime;
+            if (waitingtime <0)
+            {
+                ChangeState(States.patrol);
+            }
         }
         ChangeState();
     }
@@ -121,6 +153,10 @@ public class IAControl : MonoBehaviour
             agent.SetDestination(target.transform.position);
             yield return new WaitForEndOfFrame();
 
+            if (Vector3.Distance(transform.position, target.transform.position) < 2)
+            {
+                ChangeState(States.attack);
+            }
         }
         ChangeState();
     }

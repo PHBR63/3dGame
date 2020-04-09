@@ -13,6 +13,8 @@ public class IAControl : MonoBehaviour
 
     public Animator anim;
 
+    public int lives=5;
+
     public enum States
     {
         idle,
@@ -132,10 +134,12 @@ public class IAControl : MonoBehaviour
         {
            
             yield return new WaitForEndOfFrame();
+            /*
             if (Vector3.Distance(transform.position, target.transform.position) < 20)
             {
                 ChangeState(States.berserk);
             }
+            */
             waitingtime -= Time.deltaTime;
             if (waitingtime <0)
             {
@@ -169,5 +173,27 @@ public class IAControl : MonoBehaviour
        
         yield return new WaitForEndOfFrame();
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ChangeState(States.berserk);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerWeapon"))
+        {
+            lives--;
+            ChangeState(States.damage);
+
+            if (lives < 0)
+            {
+                ChangeState(States.die);
+            }
+        }
     }
 }

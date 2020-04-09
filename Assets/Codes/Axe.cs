@@ -17,7 +17,7 @@ public class Axe : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (rdb.velocity.magnitude > 10)
         {
